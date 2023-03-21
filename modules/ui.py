@@ -44,21 +44,76 @@ def apply_max_round_click(max_round):
 def create_ui():
     reload_javascript()
 
+    def set_language_strings(lang):
+        nonlocal language_strings
+
+        language_strings = {
+            "en": {
+                "prompt": "Enter your content...",
+                "max_length": "Max Length",
+                "top_p": "Top P",
+                "temperature": "Temperature",
+                "max_rounds": "Max Rounds",
+                "clear_history": "Clear History",
+                "sync_history": "Sync History",
+                "save_history": "Save History",
+                "load_history": "Load History",
+                "save_md": "Save as MarkDown",
+                "send": "Send",
+            },
+            "zh": {
+                "prompt": "输入你的内容...",
+                "max_length": "最大长度",
+                "top_p": "Top P",
+                "temperature": "温度",
+                "max_rounds": "最大对话轮数",
+                "clear_history": "清空对话",
+                "sync_history": "同步对话",
+                "save_history": "保存对话",
+                "load_history": "读取对话",
+                "save_md": "保存为 MarkDown",
+                "send": "发送",
+            },
+        }[lang]
+
+    def change_language(lang):
+        set_language_strings(lang)
+        input_message.placeholder = language_strings["prompt"]
+        max_length.label = language_strings["max_length"]
+        top_p.label = language_strings["top_p"]
+        temperature.label = language_strings["temperature"]
+        max_rounds.label = language_strings["max_rounds"]
+        clear.label = language_strings["clear_history"]
+        sync_his_btn.label = language_strings["sync_history"]
+        save_his_btn.label = language_strings["save_history"]
+        load_his_btn.label = language_strings["load_history"]
+        save_md_btn.label = language_strings["save_md"]
+        submit.label = language_strings["send"]
+
+    language_strings = {}
+    set_language_strings("en")
+
+    # Add this line to create a dropdown for language selection
+    language_dropdown = gr.Dropdown(["English", "Chinese"], label="Language", default="English")
+
+    # Modify this line to call change_language when language_dropdown value changes
+    language_dropdown.change(change_language, ["English", "Chinese"])
+
     with gr.Blocks(css=css, analytics_enabled=False) as chat_interface:
-        prompt = "输入你的内容..."
+        prompt = language_strings["prompt"]
         with gr.Row():
             with gr.Column(scale=3):
                 gr.Markdown("""<h2><center>ChatGLM WebUI</center></h2>""")
                 with gr.Row():
                     with gr.Column(variant="panel"):
                         with gr.Row():
-                            max_length = gr.Slider(minimum=4, maximum=4096, step=4, label='Max Length', value=2048)
-                            top_p = gr.Slider(minimum=0.01, maximum=1.0, step=0.01, label='Top P', value=0.7)
+                            max_length = gr.Slider(minimum=4, maximum=4096, step=4, label=language_strings["max_length"], value=2048)
+                            top_p = gr.Slider(minimum=0.01, maximum=1.0, step=0.01, label=language_strings["top_p"], value=0.7)
                         with gr.Row():
-                            temperature = gr.Slider(minimum=0.01, maximum=1.0, step=0.01, label='Temperature', value=0.95)
+                            temperature = gr.Slider(minimum=0.01, maximum=1.0, step=0.01, label=language_strings["temperature"], value=0.95)
 
                         with gr.Row():
-                            max_rounds = gr.Slider(minimum=1, maximum=100, step=1, label="最大对话轮数", value=20)
+                            max_rounds = gr.Slider(minimum=1, maximum=100, step=1, label=language_strings["max_rounds"], value=20)
                             apply_max_rounds = gr.Button("✔", elem_id="del-btn")
 
                         cmd_output = gr.Textbox(label="Command Output")
@@ -66,17 +121,17 @@ def create_ui():
                 with gr.Row():
                     with gr.Column(variant="panel"):
                         with gr.Row():
-                            clear = gr.Button("清空对话")
+                            clear = gr.Button(language_strings["clear_history"])
 
                         with gr.Row():
-                            sync_his_btn = gr.Button("同步对话")
+                            sync_his_btn = gr.Button(language_strings["sync_history"])
 
                         with gr.Row():
-                            save_his_btn = gr.Button("保存对话")
-                            load_his_btn = gr.UploadButton("读取对话", file_types=['file'], file_count='single')
+                            save_his_btn = gr.Button(language_strings["save_history"])
+                            load_his_btn = gr.UploadButton(language_strings["load_history"], file_types=['file'], file_count='single')
 
                         with gr.Row():
-                            save_md_btn = gr.Button("保存为 MarkDown")
+                            save_md_btn = gr.Button(language_strings["save_md"])
 
             with gr.Column(scale=7):
                 chatbot = gr.Chatbot(elem_id="chat-box", show_label=False).style(height=800)
@@ -85,7 +140,7 @@ def create_ui():
                     clear_input = gr.Button("🗑️", elem_id="del-btn")
 
                 with gr.Row():
-                    submit = gr.Button("发送", elem_id="c_generate")
+                    submit = gr.Button(language_strings["send"], elem_id="c_generate")
 
         submit.click(predict, inputs=[
             input_message,

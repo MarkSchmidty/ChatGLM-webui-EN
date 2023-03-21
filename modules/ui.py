@@ -90,7 +90,8 @@ def create_ui():
     language_dropdown = gr.Dropdown(["English", "Chinese"], label="Language", default="English")
 
     with gr.Blocks(css=css, analytics_enabled=False) as chat_interface:
-        language_dropdown.change(change_language, ["English", "Chinese"])
+        language_dropdown.change(change_language)
+
         prompt = language_strings["prompt"]
         with gr.Row():
             with gr.Column(scale=3):

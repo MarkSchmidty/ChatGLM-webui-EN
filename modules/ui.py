@@ -1,7 +1,5 @@
 import os
-
 import gradio as gr
-
 from modules import options
 from modules.context import ctx
 from modules.model import infer
@@ -9,7 +7,6 @@ from modules.model import infer
 css = "style.css"
 script_path = "scripts"
 _gradio_template_response_orig = gr.routes.templates.TemplateResponse
-
 
 def predict(query, max_length, top_p, temperature):
     ctx.limit_round()
@@ -30,16 +27,13 @@ def predict(query, max_length, top_p, temperature):
     ctx.refresh_last()
     yield ctx.rh, ""
 
-
 def clear_history():
     ctx.clear()
     return gr.update(value=[])
 
-
 def apply_max_round_click(max_round):
     ctx.max_rounds = max_round
     return f"Applied: max round {ctx.max_rounds}"
-
 
 def create_ui():
     reload_javascript()
@@ -93,13 +87,10 @@ def create_ui():
     language_strings = {}
     set_language_strings("en")
 
-    # Add this line to create a dropdown for language selection
     language_dropdown = gr.Dropdown(["English", "Chinese"], label="Language", default="English")
 
-    # Modify this line to call change_language when language_dropdown value changes
-    language_dropdown.change(change_language, ["English", "Chinese"])
-
     with gr.Blocks(css=css, analytics_enabled=False) as chat_interface:
+        language_dropdown.change(change_language, ["English", "Chinese"])
         prompt = language_strings["prompt"]
         with gr.Row():
             with gr.Column(scale=3):

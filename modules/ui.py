@@ -87,10 +87,7 @@ def create_ui():
     language_strings = {}
     set_language_strings("en")
 
-    language_dropdown = gr.Dropdown(["English", "Chinese"], label="Language", default="English")
-
     with gr.Blocks(css=css, analytics_enabled=False) as chat_interface:
-        language_dropdown.change(change_language)
 
         prompt = language_strings["prompt"]
         with gr.Row():
@@ -124,6 +121,9 @@ def create_ui():
 
                         with gr.Row():
                             save_md_btn = gr.Button(language_strings["save_md"])
+                            language_dropdown = gr.Dropdown(["English", "Chinese"], label="Language", default="English")
+                                language_dropdown.change(change_language)
+
 
             with gr.Column(scale=7):
                 chatbot = gr.Chatbot(elem_id="chat-box", show_label=False).style(height=800)

@@ -122,7 +122,7 @@ def create_ui():
                         with gr.Row():
                             save_md_btn = gr.Button(language_strings["save_md"])
                             language_dropdown = gr.Dropdown(["English", "Chinese"], label="Language", default="English")
-                                language_dropdown.change(change_language)
+                            language_dropdown.change(change_language)
 
 
             with gr.Column(scale=7):

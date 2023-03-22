@@ -37,9 +37,10 @@ def load_model():
 
     global tokenizer, model
 
-    tokenizer = AutoTokenizer.from_pretrained(cmd_opts.model_path, trust_remote_code=True)
-    model = AutoModel.from_pretrained(cmd_opts.model_path, trust_remote_code=True)
-    prepare_model()
+    tokenizer = AutoTokenizer.from_pretrained(
+        cmd_opts.model_path, trust_remote_code=True, revision=cmd_opts.branch)
+    model = AutoModel.from_pretrained(
+        cmd_opts.model_path, trust_remote_code=True, revision=cmd_opts.branch)
 
 
 def infer(query,

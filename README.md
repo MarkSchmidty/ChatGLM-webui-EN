@@ -1,6 +1,5 @@
 # ChatGLM-webui
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MarkSchmidty/ChatGLM-webui-EN/blob/main/ChatGLM-webui-EN.ipynb) <-- press here to launch the web demo
-A webui for ChatGLM made by THUDM. [chatglm-6b](https://huggingface.co/THUDM/chatglm-6b)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MarkSchmidty/ChatGLM-webui-EN/blob/main/ChatGLM-webui-EN.ipynb) <-- press here to test it in Colab
 
 ![image](https://user-images.githubusercontent.com/36563862/226165277-acc5ba44-8041-4c30-a6aa-2746c87f8475.png)
 
